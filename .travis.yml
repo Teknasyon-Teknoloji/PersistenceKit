@@ -14,5 +14,5 @@ before_install:
 
 script:
   - set -o pipefail
-  - xcodebuild -scheme UserDefaultsStore -destination "$DESTINATION" $ACTION | xcpretty -f `xcpretty-json-formatter`
+  - xcodebuild -scheme PersistenceKit -destination "$DESTINATION" $ACTION | xcpretty -f `xcpretty-json-formatter`
   - bash <(curl -s https://codecov.io/bash)
