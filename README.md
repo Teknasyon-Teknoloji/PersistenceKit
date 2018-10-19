@@ -1,5 +1,24 @@
 # PersistenceKit
 
+
+## tl;dr
+You love Swift's Codable protocol and use it everywhere, who doesn't!
+Here is an easy and very light way to store and retrieve `Codable` objects to various persistence layers, in a couple lines of code!
+
+## Persistence Layers
+
+PersistenceKit offers 3 layers of persistence:
+
+### 1. UserDefaults
+Stores data using [`UserDefaults`](https://developer.apple.com/documentation/foundation/userdefaults) - suitable for storing a reasonable number of objects.
+
+### 2. Files
+Stores data directly to directories in the app's documents directory using [`FileManager`](https://developer.apple.com/documentation/foundation/filemanager) - suitable for storing large number of objects.
+
+### 3. Keychain
+Stores data to OS's keychain using the [`Security Framework`](https://developer.apple.com/documentation/security) - suitable for storing sensitive data, like access tokens.
+
+
 ## Installation
 
 <details>
@@ -78,13 +97,7 @@ struct Laptop: Codable, Identifiable {
 
 > Notice how `User` uses `Int` for its id, while `Laptop` uses `String`, in fact the id can be any type. PersistenceKit uses Swift keypaths to refer to properties without actually invoking them. Swift rocks 🤘
 
-### 2.1 Create Stores
-
-PersistenceKit offers 3 layers of persistence:
-
--  **UserDefaults**: stores data using `UserDefaults` - suitable for storing a limited number of objects.
-- **Files** stores data directly to app's documents directory using `FileManager` - suitable for storing large number of objects.
-- **Keychain** stores data to system's keychain - suitable for storing sensitive data, like access tokens.
+### 2 Create Stores
 
 ```swift
 // To save objects to UserDefaults, create UserDefaultsStore:
