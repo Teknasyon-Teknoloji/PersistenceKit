@@ -1,5 +1,16 @@
 # PersistenceKit
 
+<a href="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit"><img src="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit.svg?branch=master" alt="Build Status"></a>
+<a href="https://codecov.io/gh/Teknasyon-Teknoloji/PersistenceKit"><img src="https://codecov.io/gh/Teknasyon-Teknoloji/PersistenceKit/branch/master/graph/badge.svg" alt="Test Coverage" /></a>
+<a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit"><img src="https://img.shields.io/cocoapods/p/PersistenceKit.svg?style=flat" alt="Platforms" /></a>
+<a href="https://cocoapods.org/pods/PersistenceKit"><img src="https://img.shields.io/cocoapods/v/PersistenceKit.svg" alt="Cocoapods" /></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
+<a href="https://swift.org/package-manager/"><img src="https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat" alt="Swift Package Manager compatible" /></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-4.2-orange.svg" alt="Swift" /></a>
+<a href="https://developer.apple.com/xcode"><img src="https://img.shields.io/badge/Xcode-10-blue.svg" alt="Xcode"></a>
+<a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT"></a>
+
+
 
 ## tl;dr
 You love Swift's Codable protocol and use it everywhere, who doesn't!
