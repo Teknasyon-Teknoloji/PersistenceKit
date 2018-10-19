@@ -166,6 +166,19 @@ final class StoreTests: XCTestCase {
 		XCTAssertEqual(counter, 3)
 	}
 
+	func testSavePenetration() {
+		let store = createFreshUsersStore()!
+		let n = 1000
+		for i in 0..<n {
+			let user = TestUser(userId: i, firstName: "Test", lastName: "Test", age: 20)
+			XCTAssertNoThrow(try store.save(user))
+			XCTAssertEqual(store.objectsCount, i + 1)
+		}
+		XCTAssertEqual(store.objectsCount, n)
+		store.deleteAll()
+		XCTAssertEqual(store.objectsCount, 0)
+	}
+
 }
 
 // MARK: - Helpers
