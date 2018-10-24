@@ -51,7 +51,7 @@ open class SingleUserDefaultsStore<T: Codable> {
 		self.store = store
 	}
 
-	/// Save object to store. _O(1)_
+	/// Save object to store.
 	///
 	/// - Parameter object: object to save.
 	/// - Throws: JSON encoding error.
@@ -60,17 +60,31 @@ open class SingleUserDefaultsStore<T: Codable> {
 		store.set(data, forKey: key)
 	}
 
-	/// Get object from store. _O(1)_
+	/// Save optional object (if not nil) to store.
+	///
+	/// - Parameter optionalObject: optional object to save.
+	/// - Throws: JSON encoding error.
+	public func save(_ optionalObject: T?) throws {
+		guard let object = optionalObject else { return }
+		try save(object)
+	}
+
+	/// Get object from store.
 	public var object: T? {
 		guard let data = store.data(forKey: key) else { return nil }
 		guard let dict = try? decoder.decode([String: T].self, from: data) else { return nil }
 		return extractObject(from: dict)
 	}
 
-	/// Delete object from store. _O(1)_
+	/// Delete object from store.
 	public func delete() {
 		store.set(nil, forKey: key)
 		store.removeSuite(named: uniqueIdentifier)
+	}
+
+	/// Check if store has an object.
+	public var hasObject: Bool {
+		return object != nil
 	}
 
 }
@@ -83,7 +97,7 @@ private extension SingleUserDefaultsStore {
 	/// - Parameter object: object.
 	/// - Returns: dictionary enclosing object.
 	func generateDict(for object: T) -> [String: T] {
-		return ["object": object]
+		return [key: object]
 	}
 
 	/// Extract object from dictionary.
@@ -91,7 +105,7 @@ private extension SingleUserDefaultsStore {
 	/// - Parameter dict: dictionary.
 	/// - Returns: object.
 	func extractObject(from dict: [String: T]) -> T? {
-		return dict["object"]
+		return dict[key]
 	}
 
 	/// Store key for object.

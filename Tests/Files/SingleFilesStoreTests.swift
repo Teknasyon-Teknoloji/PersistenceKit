@@ -48,6 +48,26 @@ final class SingleFilesStoreTests: XCTestCase {
 		XCTAssertNotNil(store.object)
 	}
 
+	func testSaveOptionalObject() {
+		let store = createFreshUsersStore()
+		XCTAssertNoThrow(try store.save(nil))
+		XCTAssertFalse(store.hasObject)
+
+		let user: TestUser? = TestUser.johnson
+		XCTAssertNoThrow(try store.save(user))
+		XCTAssert(store.hasObject)
+	}
+
+	func testHasObject() {
+		let store = createFreshUsersStore()
+
+		XCTAssertNoThrow(try store.save(TestUser.john))
+		XCTAssert(store.hasObject)
+
+		XCTAssertNoThrow(try store.delete())
+		XCTAssertFalse(store.hasObject)
+	}
+
 }
 
 // MARK: - Helpers

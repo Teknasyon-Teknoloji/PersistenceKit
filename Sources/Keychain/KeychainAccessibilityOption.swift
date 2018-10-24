@@ -63,7 +63,7 @@ public enum KeychainAccessibilityOption: CaseIterable {
 // MARK: - Helpers
 internal extension KeychainAccessibilityOption {
 
-	/// CFString attribute for a KeychainAccessibilityOption
+	/// `CFString` attribute for a `KeychainAccessibilityOption`
 	var attribute: CFString {
 		switch self {
 		case .always:

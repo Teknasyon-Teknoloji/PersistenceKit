@@ -48,9 +48,9 @@ open class SingleKeychainStore<T: Codable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
 	/// - Parameters:
-	///   - serviceName: service name. _default is bundle identifier or "Persistence"_
+	///   - serviceName: service name. _default is bundle identifier or "PersistenceKit"_
 	///   - uniqueIdentifier: uniqueIdentifier: store's unique identifier.
-	required public init(serviceName: String = Bundle.main.bundleIdentifier ?? "Persistence", uniqueIdentifier: String) {
+	required public init(serviceName: String = Bundle.main.bundleIdentifier ?? "PersistenceKit", uniqueIdentifier: String) {
 		self.serviceName = serviceName
 		self.uniqueIdentifier = uniqueIdentifier
 	}
@@ -130,12 +130,17 @@ open class SingleKeychainStore<T: Codable> {
 // MARK: - Helpers
 private extension SingleKeychainStore {
 
+	/// Store key for object.
+	var key: String {
+		return "\(uniqueIdentifier)-single-object"
+	}
+
 	/// generate a dictionary from a `Codable` object.
 	///
 	/// - Parameter object: `Codable` object.
 	/// - Returns: save dictionary.
 	func generateDict(for object: T) -> [String: T] {
-		return ["object": object]
+		return [key: object]
 	}
 
 	/// Get `Codable` object from a dictionary.
@@ -143,7 +148,7 @@ private extension SingleKeychainStore {
 	/// - Parameter dict: dictionary.
 	/// - Returns: optional Codable object
 	func extractObject(from dict: [String: T]) -> T? {
-		return dict["object"]
+		return dict[key]
 	}
 
 	/// Creata a query dictionary from an option.

@@ -1,5 +1,8 @@
-# PersistenceKit
+<p align="center">
+<img src="https://cdn.rawgit.com/Teknasyon-Teknoloji/PersistenceKit/master/Assets/logo.svg" title="PersistenceKit">
+</p>
 
+<p align="center">
 <a href="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit"><img src="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit.svg?branch=master" alt="Build Status"></a>
 <a href="https://codecov.io/gh/Teknasyon-Teknoloji/PersistenceKit"><img src="https://codecov.io/gh/Teknasyon-Teknoloji/PersistenceKit/branch/master/graph/badge.svg" alt="Test Coverage" /></a>
 <a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit"><img src="https://img.shields.io/cocoapods/p/PersistenceKit.svg?style=flat" alt="Platforms" /></a>
@@ -9,31 +12,34 @@
 <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-4.2-orange.svg" alt="Swift" /></a>
 <a href="https://developer.apple.com/xcode"><img src="https://img.shields.io/badge/Xcode-10-blue.svg" alt="Xcode"></a>
 <a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT"></a>
-
+</p>
 
 
 ## tl;dr
 You love Swift's Codable protocol and use it everywhere, who doesn't!
-Here is an easy and very light way to store and retrieve `Codable` objects to various persistence layers, in a couple lines of code!
+Here is an easy and very light way to store and retrieve `Codable` objects to various persistence layers, in a few lines of code!
 
 ## Persistence Layers
 
-PersistenceKit offers 3 layers of persistence:
+PersistenceKit offers 3 layers of persistence suitable for most use cases:
 
 ### 1. UserDefaults
-Stores data using [`UserDefaults`](https://developer.apple.com/documentation/foundation/userdefaults) - suitable for storing a reasonable number of objects.
+- Stores data using [`UserDefaults`](https://developer.apple.com/documentation/foundation/userdefaults).
+- Suitable for storing a reasonable number of objects.
 
 ### 2. Files
-Stores data directly to directories in the app's documents directory using [`FileManager`](https://developer.apple.com/documentation/foundation/filemanager) - suitable for storing large number of objects.
+- Stores data directly to directories in the app's documents directory using [`FileManager`](https://developer.apple.com/documentation/foundation/filemanager).
+- Suitable for storing large number of objects.
 
 ### 3. Keychain
-Stores data to OS's keychain using the [`Security Framework`](https://developer.apple.com/documentation/security) - suitable for storing sensitive data, like access tokens.
+- Stores data to OS's keychain using the [`Security Framework`](https://developer.apple.com/documentation/security).
+- Suitable for storing sensitive data, like access tokens.
 
 
 ## Installation
 
 <details>
-<summary>CocoaPods (Recommended)</summary>
+<summary>CocoaPods</summary>
 </br>
 <p>To integrate PersistenceKit into your Xcode project using <a href="http://cocoapods.org">CocoaPods</a>, specify it in your <code>Podfile</code>:</p>
 <pre><code class="ruby language-ruby">pod 'PersistenceKit'</code></pre>
@@ -51,14 +57,20 @@ Stores data to OS's keychain using the [`Security Framework`](https://developer.
 <details>
 <summary>Swift Package Manager</summary>
 </br>
-<p>The <a href="https://swift.org/package-manager/">Swift Package Manager</a> is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but PersistenceKit does support its use on supported platforms.</p>
-<p>Once you have your Swift package set up, adding PersistenceKit as a dependency is as easy as adding it to the dependencies value of your Package.swift.</p>
+<p>You can use <a href="https://swift.org/package-manager">The Swift Package Manager</a> to install <code>PersistenceKit</code> by adding the proper description to your <code>Package.swift</code> file:</p>
 
 <pre><code class="swift language-swift">import PackageDescription
+
+let package = Package(
+name: "YOUR_PROJECT_NAME",
+targets: [],
 dependencies: [
 .package(url: "https://github.com/Teknasyon-Teknoloji/PersistenceKit.git", from: "0.1")
 ]
+)
 </code></pre>
+
+<p>Note that the <a href="https://swift.org/package-manager">Swift Package Manager</a> is still in early design and development, for more information checkout its <a href="https://github.com/apple/swift-package-manager">GitHub Page</a></p>
 </details>
 
 <details>
@@ -178,6 +190,9 @@ let usersCount = usersStore.objectsCount
 
 Special thanks to:
 - [Paul Hudson](https://twitter.com/twostraws) for his [article](https://www.hackingwithswift.com/articles/57/how-swift-keypaths-let-us-write-more-natural-code) on how to use Swift keypaths to write more natural code.
+
+## Credits
+- [Icon](https://www.flaticon.com/free-icon/box_1198446) made by [freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com).
 
 
 ## License

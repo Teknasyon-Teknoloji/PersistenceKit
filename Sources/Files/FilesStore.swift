@@ -49,7 +49,7 @@ open class FilesStore<T: Codable & Identifiable> {
 		self.uniqueIdentifier = uniqueIdentifier
 	}
 
-	/// Save object to store. _O(1)_
+	/// Save object to store.
 	///
 	/// - Parameter object: object to save.
 	/// - Throws: FileManager or JSON encoding error.
@@ -63,7 +63,7 @@ open class FilesStore<T: Codable & Identifiable> {
 	/// Save optional object (if not nil) to store.
 	///
 	/// - Parameter optionalObject: optional object to save.
-	/// - Throws: JSON encoding error.
+	/// - Throws: FileManager or JSON encoding error.
 	public func save(_ optionalObject: T?) throws {
 		guard let object = optionalObject else { return }
 		try save(object)
@@ -72,7 +72,7 @@ open class FilesStore<T: Codable & Identifiable> {
 	/// Save array of objects to store.
 	///
 	/// - Parameter objects: object to save.
-	/// - Throws: JSON encoding error.
+	/// - Throws: FileManager or JSON encoding error.
 	public func save(_ objects: [T]) throws {
 		try objects.forEach { try save($0) }
 	}
@@ -106,9 +106,9 @@ open class FilesStore<T: Codable & Identifiable> {
 	///
 	/// - Parameter id: object id.
 	public func delete(withId id: T.ID) throws {
-		let url = try fileURL(id: id)
+		guard let url = try? fileURL(id: id) else { return }
 		guard manager.fileExists(atPath: url.path) else { return }
-		try manager.removeItem(at: url)
+		try? manager.removeItem(at: url)
 	}
 
 	/// Delete objects with ids from given ids array.
@@ -119,10 +119,10 @@ open class FilesStore<T: Codable & Identifiable> {
 	}
 
 	/// Delete all objects in store.
-	public func deleteAll() throws {
-		let url = try storeURL()
+	public func deleteAll() {
+		guard let url = try? storeURL() else { return }
 		guard manager.fileExists(atPath: url.path) else { return }
-		try manager.removeItem(at: url)
+		try? manager.removeItem(at: url)
 	}
 
 	/// Count of all objects in store.
@@ -153,32 +153,63 @@ open class FilesStore<T: Codable & Identifiable> {
 // MARK: - Helpers
 private extension FilesStore {
 
+	/// Get object from store by its id string.
+	///
+	/// - Parameter id: object id.
+	/// - Returns: optional object.
 	func object(withIdString idString: String) -> T? {
 		guard let path = try? fileURL(idString: idString).path else { return nil }
 		guard let data = manager.contents(atPath: path) else { return nil }
 		return try? decoder.decode(T.self, from: data)
 	}
 
+	/// Documents URL.
+	///
+	/// - Returns: Documents URL.
+	/// - Throws: `FileManager` error
 	func documentsURL() throws -> URL {
 		return try manager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 	}
 
+	/// FilesStore URL.
+	///
+	/// - Returns: FilesStore URL.
+	/// - Throws: `FileManager` error
 	func filesStoreURL() throws -> URL {
 		return try documentsURL().appendingPathComponent("FilesStore")
 	}
 
+	/// Store URL.
+	///
+	/// - Returns: Store URL.
+	/// - Throws: `FileManager` error
 	func storeURL() throws -> URL {
 		return try filesStoreURL().appendingPathComponent(uniqueIdentifier, isDirectory: true)
 	}
 
+	/// URL for file with a given id.
+	///
+	/// - Parameter id: Object id.
+	/// - Returns: file URL.
+	/// - Throws: `FileManager` error
 	func fileURL(id: T.ID) throws -> URL {
 		return try fileURL(idString: "\(id)")
 	}
 
+	/// URL for file with a given string id.
+	///
+	/// - Parameter idString: Object id string.
+	/// - Returns: file URL.
+	/// - Throws: `FileManager` error
 	func fileURL(idString: String) throws -> URL {
 		return try storeURL().appendingPathComponent(idString)
 	}
 
+	/// URL for file for a given object.
+	///
+	/// - Parameter object: object.
+	/// - Returns: file URL.
+	/// - Throws: `FileManager` error
 	func fileURL(object: T) throws -> URL {
 		return try fileURL(id: object[keyPath: T.idKey])
 	}
