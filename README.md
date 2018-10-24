@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://cdn.rawgit.com/Teknasyon-Teknoloji/PersistenceKit/master/Assets/logo.svg" title="PersistenceKit">
+<img src="https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Assets/logo.svg" title="PersistenceKit">
 </p>
 
 <p align="center">
