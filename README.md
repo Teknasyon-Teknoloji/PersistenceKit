@@ -50,7 +50,7 @@ PersistenceKit offers 3 layers of persistence suitable for most use cases:
 </br>
 <p>To integrate PersistenceKit into your Xcode project using <a href="https://github.com/Carthage/Carthage">Carthage</a>, specify it in your <code>Cartfile</code>:</p>
 
-<pre><code class="ogdl language-ogdl">github "Teknasyon-Teknoloji/PersistenceKit" ~&gt; 0.1
+<pre><code class="ogdl language-ogdl">github "Teknasyon-Teknoloji/PersistenceKit"
 </code></pre>
 </details>
 
@@ -62,11 +62,11 @@ PersistenceKit offers 3 layers of persistence suitable for most use cases:
 <pre><code class="swift language-swift">import PackageDescription
 
 let package = Package(
-name: "YOUR_PROJECT_NAME",
-targets: [],
-dependencies: [
-.package(url: "https://github.com/Teknasyon-Teknoloji/PersistenceKit.git", from: "0.1")
-]
+  name: "YOUR_PROJECT_NAME",
+  targets: [],
+  dependencies: [
+    .package(url: "https://github.com/Teknasyon-Teknoloji/PersistenceKit.git", from: "0.1")
+  ]
 )
 </code></pre>
 
