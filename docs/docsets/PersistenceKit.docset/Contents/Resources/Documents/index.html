@@ -89,9 +89,12 @@
         <section class="section">
           <div class="section-content">
             
-            <h1 id='persistencekit' class='heading'>PersistenceKit</h1>
+            <p align="center">
+<img src="https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Assets/logo.svg" title="PersistenceKit">
+</p>
 
-<p><a href="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit"><img src="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit.svg?branch=master" alt="Build Status"></a>
+<p align="center">
+<a href="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit"><img src="https://travis-ci.org/Teknasyon-Teknoloji/PersistenceKit.svg?branch=master" alt="Build Status"></a>
 <a href="https://codecov.io/gh/Teknasyon-Teknoloji/PersistenceKit"><img src="https://codecov.io/gh/Teknasyon-Teknoloji/PersistenceKit/branch/master/graph/badge.svg" alt="Test Coverage" /></a>
 <a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit"><img src="https://img.shields.io/cocoapods/p/PersistenceKit.svg?style=flat" alt="Platforms" /></a>
 <a href="https://cocoapods.org/pods/PersistenceKit"><img src="https://img.shields.io/cocoapods/v/PersistenceKit.svg" alt="Cocoapods" /></a>
@@ -99,27 +102,37 @@
 <a href="https://swift.org/package-manager/"><img src="https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat" alt="Swift Package Manager compatible" /></a>
 <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-4.2-orange.svg" alt="Swift" /></a>
 <a href="https://developer.apple.com/xcode"><img src="https://img.shields.io/badge/Xcode-10-blue.svg" alt="Xcode"></a>
-<a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT"></a></p>
+<a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT"></a>
+</p>
 <h2 id='tl-dr' class='heading'>tl;dr</h2>
 
 <p>You love Swift&rsquo;s Codable protocol and use it everywhere, who doesn&rsquo;t!
-Here is an easy and very light way to store and retrieve <code>Codable</code> objects to various persistence layers, in a couple lines of code!</p>
+Here is an easy and very light way to store and retrieve <code>Codable</code> objects to various persistence layers, in a few lines of code!</p>
 <h2 id='persistence-layers' class='heading'>Persistence Layers</h2>
 
-<p>PersistenceKit offers 3 layers of persistence:</p>
+<p>PersistenceKit offers 3 layers of persistence suitable for most use cases:</p>
 <h3 id='1-userdefaults' class='heading'>1. UserDefaults</h3>
 
-<p>Stores data using <a href="https://developer.apple.com/documentation/foundation/userdefaults"><code>UserDefaults</code></a> - suitable for storing a reasonable number of objects.</p>
+<ul>
+<li>Stores data using <a href="https://developer.apple.com/documentation/foundation/userdefaults"><code>UserDefaults</code></a>.</li>
+<li>Suitable for storing a reasonable number of objects.</li>
+</ul>
 <h3 id='2-files' class='heading'>2. Files</h3>
 
-<p>Stores data directly to directories in the app&rsquo;s documents directory using <a href="https://developer.apple.com/documentation/foundation/filemanager"><code>FileManager</code></a> - suitable for storing large number of objects.</p>
+<ul>
+<li>Stores data directly to directories in the app&rsquo;s documents directory using <a href="https://developer.apple.com/documentation/foundation/filemanager"><code>FileManager</code></a>.</li>
+<li>Suitable for storing large number of objects.</li>
+</ul>
 <h3 id='3-keychain' class='heading'>3. Keychain</h3>
 
-<p>Stores data to OS&rsquo;s keychain using the <a href="https://developer.apple.com/documentation/security"><code>Security Framework</code></a> - suitable for storing sensitive data, like access tokens.</p>
+<ul>
+<li>Stores data to OS&rsquo;s keychain using the <a href="https://developer.apple.com/documentation/security"><code>Security Framework</code></a>.</li>
+<li>Suitable for storing sensitive data, like access tokens.</li>
+</ul>
 <h2 id='installation' class='heading'>Installation</h2>
 
 <details>
-<summary>CocoaPods (Recommended)</summary>
+<summary>CocoaPods</summary>
 </br>
 <p>To integrate PersistenceKit into your Xcode project using <a href="http://cocoapods.org">CocoaPods</a>, specify it in your <code>Podfile</code>:</p>
 <pre><code class="ruby language-ruby">pod 'PersistenceKit'</code></pre>
@@ -137,14 +150,20 @@ Here is an easy and very light way to store and retrieve <code>Codable</code> ob
 <details>
 <summary>Swift Package Manager</summary>
 </br>
-<p>The <a href="https://swift.org/package-manager/">Swift Package Manager</a> is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but PersistenceKit does support its use on supported platforms.</p>
-<p>Once you have your Swift package set up, adding PersistenceKit as a dependency is as easy as adding it to the dependencies value of your Package.swift.</p>
+<p>You can use <a href="https://swift.org/package-manager">The Swift Package Manager</a> to install <code>PersistenceKit</code> by adding the proper description to your <code>Package.swift</code> file:</p>
 
 <pre><code class="swift language-swift">import PackageDescription
+
+let package = Package(
+name: "YOUR_PROJECT_NAME",
+targets: [],
 dependencies: [
 .package(url: "https://github.com/Teknasyon-Teknoloji/PersistenceKit.git", from: "0.1")
 ]
+)
 </code></pre>
+
+<p>Note that the <a href="https://swift.org/package-manager">Swift Package Manager</a> is still in early design and development, for more information checkout its <a href="https://github.com/apple/swift-package-manager">GitHub Page</a></p>
 </details>
 
 <details>
@@ -250,6 +269,11 @@ dependencies: [
 <ul>
 <li><a href="https://twitter.com/twostraws">Paul Hudson</a> for his <a href="https://www.hackingwithswift.com/articles/57/how-swift-keypaths-let-us-write-more-natural-code">article</a> on how to use Swift keypaths to write more natural code.</li>
 </ul>
+<h2 id='credits' class='heading'>Credits</h2>
+
+<ul>
+<li><a href="https://www.flaticon.com/free-icon/box_1198446">Icon</a> made by <a href="https://www.flaticon.com/authors/freepik">freepik</a> from <a href="https://www.flaticon.com">flaticon.com</a>.</li>
+</ul>
 <h2 id='license' class='heading'>License</h2>
 
 <p>PersistenceKit is released under the MIT license. See <a href="https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/LICENSE">LICENSE</a> for more information.</p>
@@ -261,7 +285,7 @@ dependencies: [
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="https://github.com/Teknasyon-Teknoloji/PersistenceKit" target="_blank" rel="external">Omar Albeik</a>. All rights reserved. (Last updated: 2018-10-19)</p>
+      <p>&copy; 2018 <a class="link" href="https://github.com/Teknasyon-Teknoloji/PersistenceKit" target="_blank" rel="external">Omar Albeik</a>. All rights reserved. (Last updated: 2018-10-24)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

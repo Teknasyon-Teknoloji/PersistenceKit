@@ -52,12 +52,21 @@ open class SingleFilesStore<T: Codable> {
 	/// Save object to store.
 	///
 	/// - Parameter object: object to save.
-	/// - Throws: JSON encoding error.
+	/// - Throws: `FileManager` or JSON encoding error.
 	public func save(_ object: T) throws {
 		let data = try encoder.encode(generateDict(for: object))
 		let url = try storeURL()
 		try manager.createDirectory(atPath: url.path, withIntermediateDirectories: true, attributes: nil)
 		manager.createFile(atPath: try fileURL().path, contents: data, attributes: nil)
+	}
+
+	/// Save optional object (if not nil) to store.
+	///
+	/// - Parameter optionalObject: optional object to save.
+	/// - Throws: `FileManager` or JSON encoding error.
+	public func save(_ optionalObject: T?) throws {
+		guard let object = optionalObject else { return }
+		try save(object)
 	}
 
 	/// Get object from store.
@@ -75,23 +84,44 @@ open class SingleFilesStore<T: Codable> {
 		try manager.removeItem(at: url)
 	}
 
+	/// Check if store has an object.
+	public var hasObject: Bool {
+		return object != nil
+	}
+
 }
 
 // MARK: - Helpers
 private extension SingleFilesStore {
 
+	/// Documents URL.
+	///
+	/// - Returns: Documents URL.
+	/// - Throws: `FileManager` error
 	func documentsURL() throws -> URL {
 		return try manager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 	}
 
+	/// FilesStore URL.
+	///
+	/// - Returns: FilesStore URL.
+	/// - Throws: `FileManager` error
 	func filesStoreURL() throws -> URL {
 		return try documentsURL().appendingPathComponent("FilesStore")
 	}
 
+	/// Store URL.
+	///
+	/// - Returns: Store URL.
+	/// - Throws: `FileManager` error
 	func storeURL() throws -> URL {
 		return try filesStoreURL().appendingPathComponent(uniqueIdentifier, isDirectory: true)
 	}
 
+	/// URL for file.
+	///
+	/// - Returns: file URL.
+	/// - Throws: `FileManager` error.
 	func fileURL() throws -> URL {
 		return try storeURL().appendingPathComponent(key)
 	}
@@ -101,7 +131,7 @@ private extension SingleFilesStore {
 	/// - Parameter object: object.
 	/// - Returns: dictionary enclosing object.
 	func generateDict(for object: T) -> [String: T] {
-		return ["object": object]
+		return [key: object]
 	}
 
 	/// Extract object from dictionary.
@@ -109,7 +139,7 @@ private extension SingleFilesStore {
 	/// - Parameter dict: dictionary.
 	/// - Returns: object.
 	func extractObject(from dict: [String: T]) -> T? {
-		return dict["object"]
+		return dict[key]
 	}
 
 	/// Store key for object.

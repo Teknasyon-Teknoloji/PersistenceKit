@@ -46,11 +46,31 @@ final class SingleStoreTests: XCTestCase {
 		XCTAssertThrowsError(try store.save(user))
 	}
 
+	func testSaveOptionalObject() {
+		let store = createFreshUsersStore()!
+		XCTAssertNoThrow(try store.save(nil))
+		XCTAssertFalse(store.hasObject)
+
+		let user: TestUser? = TestUser.johnson
+		XCTAssertNoThrow(try store.save(user))
+		XCTAssert(store.hasObject)
+	}
+
 	func testObject() {
 		let store = createFreshUsersStore()!
 
 		XCTAssertNoThrow(try store.save(TestUser.johnson))
 		XCTAssertNotNil(store.object)
+	}
+
+	func testHasObject() {
+		let store = createFreshUsersStore()!
+
+		XCTAssertNoThrow(try store.save(TestUser.john))
+		XCTAssert(store.hasObject)
+
+		store.delete()
+		XCTAssertFalse(store.hasObject)
 	}
 
 }

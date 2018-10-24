@@ -51,7 +51,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		self.store = store
 	}
 
-	/// Save object to store. _O(1)_
+	/// Save object to store.
 	///
 	/// - Parameter object: object to save.
 	/// - Throws: JSON encoding error.
@@ -61,7 +61,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		increaseCounter()
 	}
 
-	/// Save optional object (if not nil) to store. _O(n)_
+	/// Save optional object (if not nil) to store.
 	///
 	/// - Parameter optionalObject: optional object to save.
 	/// - Throws: JSON encoding error.
@@ -70,7 +70,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		try save(object)
 	}
 
-	/// Save array of objects to store. _O(n)_
+	/// Save array of objects to store.
 	///
 	/// - Parameter objects: object to save.
 	/// - Throws: JSON encoding error.
@@ -80,7 +80,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		}
 	}
 
-	/// Get object from store by its id. _O(1)_
+	/// Get object from store by its id.
 	///
 	/// - Parameter id: object id.
 	/// - Returns: optional object.
@@ -89,7 +89,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		return try? decoder.decode(T.self, from: data)
 	}
 
-	/// Get array of objects from store for array of id values. _O(1)_
+	/// Get array of objects from store for a given array of id values.
 	///
 	/// - Parameter ids: array of ids.
 	/// - Returns: array of objects with the given ids.
@@ -97,20 +97,20 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		return ids.compactMap { object(withId: $0) }
 	}
 
-	/// Get all objects from store. _O(n)_
+	/// Get all objects from store.
 	///
 	/// - Returns: array of all objects in store.
 	public func allObjects() -> [T] {
 		guard objectsCount > 0 else { return [] }
-
-		return store.dictionaryRepresentation().keys.compactMap { key -> T? in
+		let keys = store.dictionaryRepresentation().keys
+		return keys.compactMap { key -> T? in
 			guard isObjectKey(key) else { return nil }
 			guard let data = store.data(forKey: key) else { return nil }
 			return try? decoder.decode(T.self, from: data)
 		}
 	}
 
-	/// Delete object by its id from store. _O(1)_
+	/// Delete object by its id from store.
 	///
 	/// - Parameter id: object id.
 	public func delete(withId id: T.ID) {
@@ -119,26 +119,24 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		decreaseCounter()
 	}
 
-	/// Delete objects with ids from given ids array. _O(1)_
+	/// Delete objects with ids from given ids array.
 	///
 	/// - Parameter ids: array of ids.
 	public func delete(withIds ids: [T.ID]) {
-		for id in ids {
-			delete(withId: id)
-		}
+		ids.forEach { delete(withId: $0) }
 	}
 
-	/// Delete all objects in store. _O(1)_
+	/// Delete all objects in store.
 	public func deleteAll() {
 		store.removePersistentDomain(forName: uniqueIdentifier)
 	}
 
-	/// Count of all objects in store. _O(1)_
+	/// Count of all objects in store.
 	public var objectsCount: Int {
 		return store.integer(forKey: counterKey)
 	}
 
-	/// Check if store has object with given id. _O(1)_
+	/// Check if store has object with given id.
 	///
 	/// - Parameter id: object id to check for.
 	/// - Returns: true if the store has an object with the given id.
@@ -146,7 +144,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		return object(withId: id) != nil
 	}
 
-	/// Iterate over all objects in store. _O(n)_
+	/// Iterate over all objects in store.
 	///
 	/// - Parameter object: iteration block.
 	public func forEach(_ object: (T) -> Void) {
@@ -186,7 +184,7 @@ private extension UserDefaultsStore {
 	/// - Parameter object: object.
 	/// - Returns: UserDefaults key for given object.
 	func key(for object: T) -> String {
-		return "\(uniqueIdentifier)-\(object[keyPath: T.idKey])"
+		return key(for: object[keyPath: T.idKey])
 	}
 
 	/// store key for object by its id.

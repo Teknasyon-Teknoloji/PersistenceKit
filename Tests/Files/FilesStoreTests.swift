@@ -135,7 +135,7 @@ final class FilesStoreTests: XCTestCase {
 		XCTAssertNoThrow(try store.save(TestUser.johnson))
 		XCTAssertNoThrow(try store.save(TestUser.james))
 
-		XCTAssertNoThrow(try store.deleteAll())
+		store.deleteAll()
 		XCTAssert(store.allObjects().isEmpty)
 	}
 
@@ -170,7 +170,7 @@ final class FilesStoreTests: XCTestCase {
 			XCTAssertEqual(store.objectsCount, i + 1)
 		}
 		XCTAssertEqual(store.objectsCount, n)
-		XCTAssertNoThrow(try store.deleteAll())
+		store.deleteAll()
 		XCTAssertEqual(store.objectsCount, 0)
 	}
 
@@ -181,7 +181,7 @@ private extension FilesStoreTests {
 
 	func createFreshUsersStore() -> FilesStore<TestUser> {
 		let store = FilesStore<TestUser>(uniqueIdentifier: "users")
-		XCTAssertNoThrow(try store.deleteAll())
+		store.deleteAll()
 		return store
 	}
 
