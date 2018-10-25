@@ -44,9 +44,14 @@ open class SingleFilesStore<T: Codable> {
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
-	/// - Parameter uniqueIdentifier: store's unique identifier.
-	required public init(uniqueIdentifier: String) {
+	/// - Parameters:
+	///   - uniqueIdentifier: store's unique identifier.
+	///   - initialObject: optional object to save to store initially. _default is `nil`_
+	required public init(uniqueIdentifier: String, initialObject: T? = nil) {
 		self.uniqueIdentifier = uniqueIdentifier
+		if let object = initialObject {
+			try? save(object)
+		}
 	}
 
 	/// Save object to store.

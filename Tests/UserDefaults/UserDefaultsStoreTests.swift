@@ -31,6 +31,14 @@ final class StoreTests: XCTestCase {
 		XCTAssertNotNil(store)
 	}
 
+	func testCreateStoreWithInitialObjects() {
+		let store = createFreshUsersStore(initialObjects: [TestUser.james, TestUser.john])
+		XCTAssertNotNil(store)
+		XCTAssertEqual(store!.objectsCount, 2)
+		XCTAssert(store!.allObjects().contains(TestUser.james))
+		XCTAssert(store!.allObjects().contains(TestUser.john))
+	}
+
 	func testSaveObject() {
 		let store = createFreshUsersStore()!
 
@@ -184,9 +192,10 @@ final class StoreTests: XCTestCase {
 // MARK: - Helpers
 private extension StoreTests {
 
-	func createFreshUsersStore() -> UserDefaultsStore<TestUser>? {
-		let store = UserDefaultsStore<TestUser>(uniqueIdentifier: "users")
+	func createFreshUsersStore(initialObjects: [TestUser]? = nil) -> UserDefaultsStore<TestUser>? {
+		var store = UserDefaultsStore<TestUser>(uniqueIdentifier: "users")
 		store?.deleteAll()
+		store = UserDefaultsStore<TestUser>(uniqueIdentifier: "users", initialObjects: initialObjects)
 		return store
 	}
 

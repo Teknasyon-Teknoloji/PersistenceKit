@@ -26,6 +26,13 @@ import XCTest
 
 final class FilesStoreTests: XCTestCase {
 
+	func testCreateStoreWithInitialObjects() {
+		let store = createFreshUsersStore(initialObjects: [TestUser.james, TestUser.john])
+		XCTAssertEqual(store.objectsCount, 2)
+		XCTAssert(store.allObjects().contains(TestUser.james))
+		XCTAssert(store.allObjects().contains(TestUser.john))
+	}
+
 	func testSaveObject() {
 		let store = createFreshUsersStore()
 
@@ -179,9 +186,10 @@ final class FilesStoreTests: XCTestCase {
 // MARK: - Helpers
 private extension FilesStoreTests {
 
-	func createFreshUsersStore() -> FilesStore<TestUser> {
-		let store = FilesStore<TestUser>(uniqueIdentifier: "users")
+	func createFreshUsersStore(initialObjects: [TestUser]? = nil) -> FilesStore<TestUser> {
+		var store = FilesStore<TestUser>(uniqueIdentifier: "users")
 		store.deleteAll()
+		store = FilesStore<TestUser>(uniqueIdentifier: "users", initialObjects: initialObjects)
 		return store
 	}
 
