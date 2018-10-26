@@ -49,9 +49,9 @@ open class FilesStore<T: Codable & Identifiable> {
 	///   - initialObjects: optional objects array to save to store initially. _default is `nil`_
 	required public init(uniqueIdentifier: String, initialObjects: [T]? = nil) {
 		self.uniqueIdentifier = uniqueIdentifier
-		if let objects = initialObjects {
-			try? save(objects)
-		}
+		guard objectsCount == 0 else { return }
+		guard let objects = initialObjects else { return }
+		try? save(objects)
 	}
 
 	/// Save object to store.

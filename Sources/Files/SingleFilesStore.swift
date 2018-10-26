@@ -49,9 +49,9 @@ open class SingleFilesStore<T: Codable> {
 	///   - initialObject: optional object to save to store initially. _default is `nil`_
 	required public init(uniqueIdentifier: String, initialObject: T? = nil) {
 		self.uniqueIdentifier = uniqueIdentifier
-		if let object = initialObject {
-			try? save(object)
-		}
+		guard !hasObject else { return }
+		guard let object = initialObject else { return }
+		try? save(object)
 	}
 
 	/// Save object to store.
