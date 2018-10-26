@@ -51,9 +51,9 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 		guard let store = UserDefaults(suiteName: uniqueIdentifier) else { return nil }
 		self.uniqueIdentifier = uniqueIdentifier
 		self.store = store
-		if let objects = initialObjects {
-			try? save(objects)
-		}
+		guard objectsCount == 0 else { return }
+		guard let objects = initialObjects else { return }
+		try? save(objects)
 	}
 
 	/// Save object to store.
