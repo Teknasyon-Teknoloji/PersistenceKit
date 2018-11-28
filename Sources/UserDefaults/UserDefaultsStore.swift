@@ -44,16 +44,11 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
-	/// - Parameters:
-	///   - uniqueIdentifier: uniqueIdentifier: store's unique identifier.
-	///   - initialObjects: optional objects array to save to store initially. _default is `nil`_
-	required public init?(uniqueIdentifier: String, initialObjects: [T]? = nil) {
+	/// - Parameter uniqueIdentifier: uniqueIdentifier: store's unique identifier.
+	required public init?(uniqueIdentifier: String) {
 		guard let store = UserDefaults(suiteName: uniqueIdentifier) else { return nil }
 		self.uniqueIdentifier = uniqueIdentifier
 		self.store = store
-		guard objectsCount == 0 else { return }
-		guard let objects = initialObjects else { return }
-		try? save(objects)
 	}
 
 	/// Save object to store.
