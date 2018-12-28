@@ -23,13 +23,16 @@
 
 import Foundation
 
-/// `SingleFilesStore` offers a convenient way to store a single `Codable` objects in the files system.
-open class SingleFilesStore<T: Codable> {
+/// `SingleFileStore` offers a convenient way to store a single `Codable` objects in the files system.
+open class SingleFileStore<T: Codable> {
 
 	/// Store's unique identifier.
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
+
+	/// Store `Expiration` option. _default is `.never`_
+	public let expiration: Expiration
 
 	/// JSON encoder. _default is `JSONEncoder()`_
 	open var encoder = JSONEncoder()
@@ -44,9 +47,12 @@ open class SingleFilesStore<T: Codable> {
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
-	/// - Parameter uniqueIdentifier: store's unique identifier.
-	required public init(uniqueIdentifier: String) {
+	/// - Parameters:
+	///   - uniqueIdentifier: store's unique identifier.
+	///   - expiryDuration: optional store's expiry duration _default is `.never`_.
+	required public init(uniqueIdentifier: String, expiration: Expiration = .never) {
 		self.uniqueIdentifier = uniqueIdentifier
+		self.expiration = expiration
 	}
 
 	/// Save object to store.
@@ -58,6 +64,13 @@ open class SingleFilesStore<T: Codable> {
 		let url = try storeURL()
 		try manager.createDirectory(atPath: url.path, withIntermediateDirectories: true, attributes: nil)
 		manager.createFile(atPath: try fileURL().path, contents: data, attributes: nil)
+
+		let attributes: [FileAttributeKey: Any] = [
+			.creationDate: Date(),
+			.modificationDate: expiration.date
+		]
+
+		try manager.setAttributes(attributes, ofItemAtPath: fileURL().path)
 	}
 
 	/// Save optional object (if not nil) to store.
@@ -73,6 +86,14 @@ open class SingleFilesStore<T: Codable> {
 	public var object: T? {
 		guard let path = try? fileURL().path else { return nil }
 		guard let data = manager.contents(atPath: path) else { return nil }
+
+		guard let attributes = try? manager.attributesOfItem(atPath: path) else { return nil }
+		guard let modificationDate = attributes[.modificationDate] as? Date else { return nil }
+		guard modificationDate >= Date() else {
+			try? delete()
+			return nil
+		}
+
 		guard let dict = try? decoder.decode([String: T].self, from: data) else { return nil }
 		return extractObject(from: dict)
 	}
@@ -92,14 +113,22 @@ open class SingleFilesStore<T: Codable> {
 }
 
 // MARK: - Helpers
-private extension SingleFilesStore {
+private extension SingleFileStore {
 
 	/// Documents URL.
 	///
 	/// - Returns: Documents URL.
 	/// - Throws: `FileManager` error
 	func documentsURL() throws -> URL {
-		return try manager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+		let directory: FileManager.SearchPathDirectory
+		switch expiration {
+		case .never:
+			directory = .documentDirectory
+		default:
+			directory = .cachesDirectory
+		}
+
+		return try manager.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
 	}
 
 	/// FilesStore URL.

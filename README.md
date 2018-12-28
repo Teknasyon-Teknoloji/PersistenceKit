@@ -35,6 +35,9 @@ PersistenceKit offers 3 layers of persistence suitable for most use cases:
 - Stores data to OS's keychain using the [`Security Framework`](https://developer.apple.com/documentation/security).
 - Suitable for storing sensitive data, like access tokens.
 
+## What's new in v1.1
+
+v1.1 Brings the ability to set expiration options to [`FilesStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/Files/FilesStore.swift) and [`SingleFilesStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/Files/SingleFilesStore.swift)
 
 ## Installation
 

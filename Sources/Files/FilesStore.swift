@@ -31,6 +31,9 @@ open class FilesStore<T: Codable & Identifiable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
 
+	/// Store `Expiration` option. _default is `.never`_
+	public let expiration: Expiration
+
 	/// JSON encoder. _default is `JSONEncoder()`_
 	open var encoder = JSONEncoder()
 
@@ -40,13 +43,16 @@ open class FilesStore<T: Codable & Identifiable> {
 	/// FileManager. _default is `FileManager.default`_
 	private var manager = FileManager.default
 
-	/// Initialize store with given identifier.
+	/// Initialize store with given identifiera and an optional expiry duration.
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
-	/// - Parameter uniqueIdentifier: store's unique identifier.
-	required public init(uniqueIdentifier: String) {
+	/// - Parameters:
+	///   - uniqueIdentifier: store's unique identifier.
+	///   - expiryDuration: optional store's expiry duration _default is `.never`_.
+	required public init(uniqueIdentifier: String, expiration: Expiration = .never) {
 		self.uniqueIdentifier = uniqueIdentifier
+		self.expiration = expiration
 	}
 
 	/// Save object to store.
@@ -57,7 +63,16 @@ open class FilesStore<T: Codable & Identifiable> {
 		let url = try storeURL()
 		let data = try encoder.encode(object)
 		try manager.createDirectory(atPath: url.path, withIntermediateDirectories: true, attributes: nil)
-		manager.createFile(atPath: try fileURL(object: object).path, contents: data, attributes: nil)
+
+		let path = try fileURL(object: object).path
+		manager.createFile(atPath: path, contents: data, attributes: nil)
+
+		let attributes: [FileAttributeKey: Any] = [
+			.creationDate: Date(),
+			.modificationDate: expiration.date
+		]
+
+		try manager.setAttributes(attributes, ofItemAtPath: path)
 	}
 
 	/// Save optional object (if not nil) to store.
@@ -159,16 +174,32 @@ private extension FilesStore {
 	/// - Returns: optional object.
 	func object(withIdString idString: String) -> T? {
 		guard let path = try? fileURL(idString: idString).path else { return nil }
+		guard let attributes = try? manager.attributesOfItem(atPath: path) else { return nil }
+		guard let modificationDate = attributes[.modificationDate] as? Date else { return nil }
+		guard modificationDate >= Date() else {
+			if let url = try? fileURL(idString: idString), manager.fileExists(atPath: url.path) {
+				try? manager.removeItem(at: url)
+			}
+			return nil
+		}
 		guard let data = manager.contents(atPath: path) else { return nil }
 		return try? decoder.decode(T.self, from: data)
 	}
 
-	/// Documents URL.
+	/// Documents or Caches URL.
 	///
-	/// - Returns: Documents URL.
+	/// - Returns: Documents or Caches URL.
 	/// - Throws: `FileManager` error
 	func documentsURL() throws -> URL {
-		return try manager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+		let directory: FileManager.SearchPathDirectory
+		switch expiration {
+		case .never:
+			directory = .documentDirectory
+		default:
+			directory = .cachesDirectory
+		}
+
+		return try manager.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
 	}
 
 	/// FilesStore URL.
