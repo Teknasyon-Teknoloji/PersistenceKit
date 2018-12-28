@@ -14,7 +14,8 @@
 		07572F4E217352490093BD3E /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07572F4D217352490093BD3E /* KeychainError.swift */; };
 		07572F50217352550093BD3E /* SingleKeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07572F4F217352550093BD3E /* SingleKeychainStore.swift */; };
 		07572F53217354090093BD3E /* FilesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07572F52217354090093BD3E /* FilesStore.swift */; };
-		07572F55217354130093BD3E /* SingleFilesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07572F54217354130093BD3E /* SingleFilesStore.swift */; };
+		07572F55217354130093BD3E /* SingleFileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07572F54217354130093BD3E /* SingleFileStore.swift */; };
+		0773E54121D65BDD0095276F /* Expiration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0773E54021D65BDD0095276F /* Expiration.swift */; };
 		078D2A692147BA7500923390 /* SingleUserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D2A682147BA7500923390 /* SingleUserDefaultsStore.swift */; };
 		078D2A6C2147BD4100923390 /* SingleUserDefaultsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D2A6A2147BD2E00923390 /* SingleUserDefaultsStoreTests.swift */; };
 		079A3F632179EA9000CB3339 /* SingleFilesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079A3F612179EA6E00CB3339 /* SingleFilesStoreTests.swift */; };
@@ -45,9 +46,10 @@
 		07572F4D217352490093BD3E /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		07572F4F217352550093BD3E /* SingleKeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleKeychainStore.swift; sourceTree = "<group>"; };
 		07572F52217354090093BD3E /* FilesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesStore.swift; sourceTree = "<group>"; };
-		07572F54217354130093BD3E /* SingleFilesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFilesStore.swift; sourceTree = "<group>"; };
+		07572F54217354130093BD3E /* SingleFileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFileStore.swift; sourceTree = "<group>"; };
 		07572F56217354A30093BD3E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		07572F57217354A30093BD3E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		0773E54021D65BDD0095276F /* Expiration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expiration.swift; sourceTree = "<group>"; };
 		078D2A682147BA7500923390 /* SingleUserDefaultsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleUserDefaultsStore.swift; sourceTree = "<group>"; };
 		078D2A6A2147BD2E00923390 /* SingleUserDefaultsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleUserDefaultsStoreTests.swift; sourceTree = "<group>"; };
 		079A3F612179EA6E00CB3339 /* SingleFilesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFilesStoreTests.swift; sourceTree = "<group>"; };
@@ -120,7 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				07572F52217354090093BD3E /* FilesStore.swift */,
-				07572F54217354130093BD3E /* SingleFilesStore.swift */,
+				07572F54217354130093BD3E /* SingleFileStore.swift */,
+				0773E54021D65BDD0095276F /* Expiration.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -302,7 +305,8 @@
 				07563831210A3C4A005CDE89 /* UserDefaultsStore.swift in Sources */,
 				07572F53217354090093BD3E /* FilesStore.swift in Sources */,
 				07572F4E217352490093BD3E /* KeychainError.swift in Sources */,
-				07572F55217354130093BD3E /* SingleFilesStore.swift in Sources */,
+				07572F55217354130093BD3E /* SingleFileStore.swift in Sources */,
+				0773E54121D65BDD0095276F /* Expiration.swift in Sources */,
 				078D2A692147BA7500923390 /* SingleUserDefaultsStore.swift in Sources */,
 				07572F50217352550093BD3E /* SingleKeychainStore.swift in Sources */,
 				07563822210A396C005CDE89 /* Identifiable.swift in Sources */,

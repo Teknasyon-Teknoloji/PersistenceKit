@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Identifiable Protocol Reference</title>
+    <title>Expiration Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/Identifiable" class="dashAnchor"></a>
-    <a title="Identifiable Protocol Reference"></a>
+    <a name="//apple_ref/swift/Enum/Expiration" class="dashAnchor"></a>
+    <a title="Expiration Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">PersistenceKit Docs</a> (100% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">PersistenceKit Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Identifiable Protocol Reference
+        Expiration Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -74,14 +74,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Identifiable</h1>
+            <h1>Expiration</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Identifiable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Expiration</span></code></pre>
 
                 </div>
               </div>
-            <p>Conform to <code>Identifiable</code> protocol in uniquely identified objects you want to store in a <code><a href="../Classes/UserDefaultsStore.html">UserDefaultsStore</a></code>.</p>
+            <p><code>Expiration</code> offers options about the validity of files stored in <code><a href="../Classes/FilesStore.html">FilesStore</a></code> and <code><a href="../Classes/SingleFileStore.html">SingleFileStore</a></code>.</p>
 
           </section>
           <section class="section task-group-section">
@@ -90,9 +90,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14PersistenceKit12IdentifiableP2IDQa"></a>
-                    <a name="//apple_ref/swift/Alias/ID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14PersistenceKit12IdentifiableP2IDQa">ID</a>
+                    <a name="/s:14PersistenceKit10ExpirationO5neveryA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/never" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14PersistenceKit10ExpirationO5neveryA2CmF">never</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -100,14 +100,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>ID type.</p>
+                        <p>Object will not expire automatically.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">associatedtype</span> <span class="kt">ID</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">never</span></code></pre>
 
                         </div>
                       </div>
@@ -117,9 +117,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14PersistenceKit12IdentifiableP5idKeys08WritableE4PathCyx2IDQzGvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/idKey" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14PersistenceKit12IdentifiableP5idKeys08WritableE4PathCyx2IDQzGvpZ">idKey</a>
+                    <a name="/s:14PersistenceKit10ExpirationO7secondsyACSdcACmF"></a>
+                    <a name="//apple_ref/swift/Element/seconds(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14PersistenceKit10ExpirationO7secondsyACSdcACmF">seconds(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -127,14 +127,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Id Key.</p>
+                        <p>Object will expire after the specified amount of seconds.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">idKey</span><span class="p">:</span> <span class="kt">WritableKeyPath</span><span class="o">&lt;</span><span class="k">Self</span><span class="p">,</span> <span class="kt"><a href="../Protocols/Identifiable.html#/s:14PersistenceKit12IdentifiableP2IDQa">ID</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">seconds</span><span class="p">(</span><span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14PersistenceKit10ExpirationO4dateyAC10Foundation4DateVcACmF"></a>
+                    <a name="//apple_ref/swift/Element/date(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14PersistenceKit10ExpirationO4dateyAC10Foundation4DateVcACmF">date(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Object will expire on the specified date.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">date</span><span class="p">(</span><span class="kt">Date</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

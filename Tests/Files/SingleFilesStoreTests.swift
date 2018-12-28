@@ -73,10 +73,10 @@ final class SingleFilesStoreTests: XCTestCase {
 // MARK: - Helpers
 private extension SingleFilesStoreTests {
 
-	func createFreshUsersStore() -> SingleFilesStore<TestUser> {
-		var store = SingleFilesStore<TestUser>(uniqueIdentifier: "single-user")
+	func createFreshUsersStore() -> SingleFileStore<TestUser> {
+		var store = SingleFileStore<TestUser>(uniqueIdentifier: "single-user")
 		XCTAssertNoThrow(try store.delete())
-		store = SingleFilesStore<TestUser>(uniqueIdentifier: "single-user")
+		store = SingleFileStore<TestUser>(uniqueIdentifier: "single-user")
 		return store
 	}
 
