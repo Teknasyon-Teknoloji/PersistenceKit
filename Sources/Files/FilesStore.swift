@@ -43,15 +43,20 @@ open class FilesStore<T: Codable & Identifiable> {
 	/// FileManager. _default is `FileManager.default`_
 	private var manager = FileManager.default
 
+	/// Whether keys should be hashed before storing or not.
+	private var useHashing: Bool
+
 	/// Initialize store with given identifiera and an optional expiry duration.
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
 	/// - Parameters:
 	///   - uniqueIdentifier: store's unique identifier.
+	///   - useHashing: Whether keys should be hashed before storing or not. _default is `false`_
 	///   - expiryDuration: optional store's expiry duration _default is `.never`_.
-	required public init(uniqueIdentifier: String, expiration: Expiration = .never) {
+	required public init(uniqueIdentifier: String, useHashing: Bool = false, expiration: Expiration = .never) {
 		self.uniqueIdentifier = uniqueIdentifier
+		self.useHashing = useHashing
 		self.expiration = expiration
 	}
 
@@ -224,7 +229,7 @@ private extension FilesStore {
 	/// - Returns: file URL.
 	/// - Throws: `FileManager` error
 	func fileURL(id: T.ID) throws -> URL {
-		return try fileURL(idString: "\(id)")
+		return try useHashing ? fileURL(idString: "\(id.hashValue)") : fileURL(idString: "\(id)")
 	}
 
 	/// URL for file with a given string id.

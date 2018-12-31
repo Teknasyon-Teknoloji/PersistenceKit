@@ -40,15 +40,21 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 	/// UserDefaults store.
 	private var store: UserDefaults
 
+	/// Whether keys should be hashed before storing or not.
+	private var useHashing: Bool
+
 	/// Initialize store with given identifier.
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
-	/// - Parameter uniqueIdentifier: uniqueIdentifier: store's unique identifier.
-	required public init?(uniqueIdentifier: String) {
+	/// - Parameters:
+	///   - uniqueIdentifier: uniqueIdentifier: store's unique identifier.
+	///   - useHashing: Whether keys should be hashed before storing or not. _default is `false`_
+	required public init?(uniqueIdentifier: String, useHashing: Bool = false) {
 		guard let store = UserDefaults(suiteName: uniqueIdentifier) else { return nil }
 		self.uniqueIdentifier = uniqueIdentifier
 		self.store = store
+		self.useHashing = useHashing
 	}
 
 	/// Save object to store.
@@ -192,7 +198,7 @@ private extension UserDefaultsStore {
 	/// - Parameter id: object id.
 	/// - Returns: UserDefaults key for given id.
 	func key(for id: T.ID) -> String {
-		return "\(uniqueIdentifier)-\(id)"
+		return useHashing ? "\(uniqueIdentifier)-\(id.hashValue)" : "\(uniqueIdentifier)-\(id.hashValue)"
 	}
 
 	/// Check if a UserDefaults key is an object key.
