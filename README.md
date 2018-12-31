@@ -37,7 +37,7 @@ PersistenceKit offers 3 layers of persistence suitable for most use cases:
 
 ## What's new in v1.2
 
-v1.2 Adds the ability to hash keys before saving values in [`UserDefaultsStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/Files/UserDefaultsStore.swift) and [`FilesStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/Files/FilesStore.swift).
+v1.2 Adds the ability to hash keys before saving values in [`UserDefaultsStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/UserDefaults/UserDefaultsStore.swift) and [`FilesStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/Files/FilesStore.swift).
 
 ## Installation
 
