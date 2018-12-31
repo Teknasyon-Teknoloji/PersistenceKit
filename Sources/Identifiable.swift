@@ -27,7 +27,7 @@ import Foundation
 public protocol Identifiable {
 
 	/// ID type.
-	associatedtype ID
+	associatedtype ID: Hashable
 
 	/// Id Key.
 	static var idKey: WritableKeyPath<Self, ID> { get }
