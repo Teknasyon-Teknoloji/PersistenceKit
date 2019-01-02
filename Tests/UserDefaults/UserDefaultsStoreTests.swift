@@ -99,6 +99,21 @@ final class StoreTests: XCTestCase {
 		XCTAssert(users.contains(TestUser.johnson))
 	}
 
+	func testCount() {
+		let store = createFreshUsersStore()!
+		XCTAssertEqual(store.objectsCount, 0)
+
+		XCTAssertNoThrow(try store.save(TestUser.james))
+		XCTAssertEqual(store.objectsCount, 1)
+
+		XCTAssertNoThrow(try store.save(TestUser.james))
+		XCTAssertNoThrow(try store.save(TestUser.james))
+		XCTAssertEqual(store.objectsCount, 1)
+
+		XCTAssertNoThrow(try store.save(TestUser.johnson))
+		XCTAssertEqual(store.objectsCount, 2)
+	}
+
 	func testDeleteObject() {
 		let store = createFreshUsersStore()!
 

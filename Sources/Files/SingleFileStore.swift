@@ -31,16 +31,16 @@ open class SingleFileStore<T: Codable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
 
-	/// Store `Expiration` option. _default is `.never`_
+	/// Store `Expiration` option. _default is .never_
 	public let expiration: Expiration
 
-	/// JSON encoder. _default is `JSONEncoder()`_
+	/// JSON encoder. _default is JSONEncoder()_
 	open var encoder = JSONEncoder()
 
-	/// JSON decoder. _default is `JSONDecoder()`_
+	/// JSON decoder. _default is JSONDecoder()_
 	open var decoder = JSONDecoder()
 
-	/// FileManager. _default is `FileManager.default`_
+	/// FileManager. _default is FileManager.default_
 	private var manager = FileManager.default
 
 	/// Initialize store with given identifier.
@@ -49,7 +49,7 @@ open class SingleFileStore<T: Codable> {
 	///
 	/// - Parameters:
 	///   - uniqueIdentifier: store's unique identifier.
-	///   - expiryDuration: optional store's expiry duration _default is `.never`_.
+	///   - expiryDuration: optional store's expiry duration _default is .never_.
 	required public init(uniqueIdentifier: String, expiration: Expiration = .never) {
 		self.uniqueIdentifier = uniqueIdentifier
 		self.expiration = expiration
