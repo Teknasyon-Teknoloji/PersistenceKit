@@ -31,16 +31,16 @@ open class FilesStore<T: Codable & Identifiable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
 
-	/// Store `Expiration` option. _default is `.never`_
+	/// Store `Expiration` option. _default is .never_
 	public let expiration: Expiration
 
-	/// JSON encoder. _default is `JSONEncoder()`_
+	/// JSON encoder. _default is JSONEncoder()_
 	open var encoder = JSONEncoder()
 
-	/// JSON decoder. _default is `JSONDecoder()`_
+	/// JSON decoder. _default is JSONDecoder()_
 	open var decoder = JSONDecoder()
 
-	/// FileManager. _default is `FileManager.default`_
+	/// FileManager. _default is FileManager.default_
 	private var manager = FileManager.default
 
 	/// Whether keys should be hashed before storing or not.
@@ -52,8 +52,8 @@ open class FilesStore<T: Codable & Identifiable> {
 	///
 	/// - Parameters:
 	///   - uniqueIdentifier: store's unique identifier.
-	///   - useHashing: Whether keys should be hashed before storing or not. _default is `false`_
-	///   - expiryDuration: optional store's expiry duration _default is `.never`_.
+	///   - useHashing: Whether keys should be hashed before storing or not. _default is false_
+	///   - expiryDuration: optional store's expiry duration _default is .never_.
 	required public init(uniqueIdentifier: String, useHashing: Bool = false, expiration: Expiration = .never) {
 		self.uniqueIdentifier = uniqueIdentifier
 		self.useHashing = useHashing

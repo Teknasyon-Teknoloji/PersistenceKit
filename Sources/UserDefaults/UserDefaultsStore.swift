@@ -31,10 +31,10 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
 
-	/// JSON encoder. _default is `JSONEncoder()`_
+	/// JSON encoder. _default is JSONEncoder()_
 	open var encoder = JSONEncoder()
 
-	/// JSON decoder. _default is `JSONDecoder()`_
+	/// JSON decoder. _default is JSONDecoder()_
 	open var decoder = JSONDecoder()
 
 	/// UserDefaults store.
@@ -49,7 +49,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 	///
 	/// - Parameters:
 	///   - uniqueIdentifier: uniqueIdentifier: store's unique identifier.
-	///   - useHashing: Whether keys should be hashed before storing or not. _default is `false`_
+	///   - useHashing: Whether keys should be hashed before storing or not. _default is false_
 	required public init?(uniqueIdentifier: String, useHashing: Bool = false) {
 		guard let store = UserDefaults(suiteName: uniqueIdentifier) else { return nil }
 		self.uniqueIdentifier = uniqueIdentifier
@@ -63,8 +63,11 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 	/// - Throws: JSON encoding error.
 	public func save(_ object: T) throws {
 		let data = try encoder.encode(object)
+		let isObjectAlreadyAdded = hasObject(withId: object[keyPath: T.idKey])
 		store.set(data, forKey: key(for: object))
-		increaseCounter()
+		if !isObjectAlreadyAdded {
+			increaseCounter()
+		}
 	}
 
 	/// Save optional object (if not nil) to store.
@@ -198,7 +201,7 @@ private extension UserDefaultsStore {
 	/// - Parameter id: object id.
 	/// - Returns: UserDefaults key for given id.
 	func key(for id: T.ID) -> String {
-		return useHashing ? "\(uniqueIdentifier)-\(id.hashValue)" : "\(uniqueIdentifier)-\(id.hashValue)"
+		return useHashing ? "\(uniqueIdentifier)-\(id.hashValue)" : "\(uniqueIdentifier)-\(id)"
 	}
 
 	/// Check if a UserDefaults key is an object key.

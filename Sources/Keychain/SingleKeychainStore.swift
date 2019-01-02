@@ -37,10 +37,10 @@ open class SingleKeychainStore<T: Codable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
 
-	/// JSON encoder. _default is `JSONEncoder()`_
+	/// JSON encoder. _default is JSONEncoder()_
 	open var encoder = JSONEncoder()
 
-	/// JSON decoder. _default is `JSONDecoder()`_
+	/// JSON decoder. _default is JSONDecoder()_
 	open var decoder = JSONDecoder()
 
 	/// Initialize store.
@@ -82,7 +82,7 @@ open class SingleKeychainStore<T: Codable> {
 	///
 	/// - Parameters:
 	///   - object: object to save.
-	///   - option: `KeychainAccessibilityOption`. _default is `KeychainAccessibilityOption.whenUnlocked`_
+	///   - option: `KeychainAccessibilityOption`. _default is KeychainAccessibilityOption.whenUnlocked_
 	/// - Throws: JSON encoding error.
 	open func update(_ object: T, withAccessibilityOption option: KeychainAccessibilityOption = .whenUnlocked) throws {
 		let data = try encoder.encode(generateDict(for: object))
@@ -102,7 +102,7 @@ open class SingleKeychainStore<T: Codable> {
 
 	/// Get object from store.
 	///
-	/// - Parameter option: `KeychainAccessibilityOption`. _default is `KeychainAccessibilityOption.whenUnlocked`_
+	/// - Parameter option: `KeychainAccessibilityOption`. _default is KeychainAccessibilityOption.whenUnlocked_
 	/// - Returns: optional object.
 	open func object(accessibilityOption option: KeychainAccessibilityOption = .whenUnlocked) -> T? {
 		var query = generateQuery(accessibilityOption: option)
@@ -119,7 +119,7 @@ open class SingleKeychainStore<T: Codable> {
 
 	/// Delete object from store.
 	///
-	/// - Parameter option: KeychainAccessibilityOption. _default is `KeychainAccessibilityOption.whenUnlocked`_
+	/// - Parameter option: KeychainAccessibilityOption. _default is KeychainAccessibilityOption.whenUnlocked_
 	open func delete(accessibilityOption option: KeychainAccessibilityOption = .whenUnlocked) {
 		let query = generateQuery(accessibilityOption: option)
 		SecItemDelete(query as CFDictionary)
