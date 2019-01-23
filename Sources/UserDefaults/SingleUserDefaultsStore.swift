@@ -40,20 +40,15 @@ open class SingleUserDefaultsStore<T: Codable> {
 	/// UserDefaults store.
 	private var store: UserDefaults
 
-	/// Initialize store with given identifier.
+	/// 1tialize store with given identifier.
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
-	/// - Parameters:
-	///   - uniqueIdentifier: uniqueIdentifier: store's unique identifier.
-	///   - initialObject: optional object to save to store initially. _default is nil_
-	required public init?(uniqueIdentifier: String, initialObject: T? = nil) {
+	/// - Parameter uniqueIdentifier: store's unique identifier.
+	required public init?(uniqueIdentifier: String) {
 		guard let store = UserDefaults(suiteName: uniqueIdentifier) else { return nil }
 		self.uniqueIdentifier = uniqueIdentifier
 		self.store = store
-		guard !hasObject else { return }
-		guard let object = initialObject else { return }
-		try? save(object)
 	}
 
 	/// Save object to store.
