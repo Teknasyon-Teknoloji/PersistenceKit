@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = "PersistenceKit"
-    s.version = "1.2.2"
+    s.version = "1.3"
     s.summary = "
     Store and retrieve Codable objects to various persistence layers, in a couple lines of code! "
     s.description = <<-DESC
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     s.module_name  = "PersistenceKit"
     s.source = { :git => "https://github.com/Teknasyon-Teknoloji/PersistenceKit.git", :tag => s.version }
     s.source_files = "Sources/**/*.swift"
-    s.swift_version = "4.2"
+    s.swift_version = "5.0"
     s.requires_arc = true
 
     s.ios.deployment_target = "8.0"
