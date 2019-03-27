@@ -35,9 +35,9 @@ PersistenceKit offers 3 layers of persistence suitable for most use cases:
 - Stores data to OS's keychain using the [`Security Framework`](https://developer.apple.com/documentation/security).
 - Suitable for storing sensitive data, like access tokens.
 
-## What's new in v1.2
+## What's new in v1.3
 
-v1.2 Adds the ability to hash keys before saving values in [`UserDefaultsStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/UserDefaults/UserDefaultsStore.swift) and [`FilesStore`](https://github.com/Teknasyon-Teknoloji/PersistenceKit/blob/master/Sources/Files/FilesStore.swift).
+v1.3 brings Swift 5.0 support
 
 ## Installation
 
