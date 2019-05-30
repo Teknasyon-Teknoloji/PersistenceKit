@@ -156,7 +156,7 @@ private extension SingleKeychainStore {
 	/// - Parameter option: `KeychainAccessibilityOption`
 	/// - Returns: query dictionary.
 	func generateQuery(accessibilityOption option: KeychainAccessibilityOption) -> [String: Any] {
-		var query: [String: Any] = [Keys.class: kSecClassGenericPassword]
+		var query: [String: Any] = [Keys.aClass: kSecClassGenericPassword]
 		query[Keys.attrService] = serviceName
 		query[Keys.attrAccessible] = option.attribute
 
@@ -191,7 +191,7 @@ private extension SingleKeychainStore {
 			return kSecAttrAccessible as String
 		}
 
-		static var `class`: String {
+		static var aClass: String {
 			return kSecClass as String
 		}
 

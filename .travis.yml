@@ -1,18 +1,19 @@
 language: objective-c
 osx_image: xcode10
 
-env:
-  - ACTION=test  PLATFORM=Mac     DESTINATION='platform=OS X'
-  - ACTION=test  PLATFORM=iOS     DESTINATION='platform=iOS Simulator,name=iPhone X'
-  - ACTION=build PLATFORM=watchOS DESTINATION='platform=watchOS Simulator,name=Apple Watch - 42mm'
-  - ACTION=test  PLATFORM=tvOS    DESTINATION='platform=tvOS Simulator,name=Apple TV 4K (at 1080p)'
-
 before_install:
   - bundle install
   - brew update
   - brew outdated xctool || brew upgrade xctool
 
+addons:
+  sonarcloud:
+    organization: teknasyon
+    token:
+      secure: dcad13541bf45043e9943d42958d6fdd028af74e
+
 script:
   - set -o pipefail
-  - xcodebuild -scheme PersistenceKit -destination "$DESTINATION" $ACTION | xcpretty -f `xcpretty-json-formatter`
-  - bash <(curl -s https://codecov.io/bash)
+  - xcodebuild -project PersistenceKit.xcodeproj/ -scheme PersistenceKit -derivedDataPath Build/ -enableCodeCoverage YES clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -f `xcpretty-json-formatter`
+  - bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/*_Test/*.xccovarchive/ > sonarqube-generic-coverage.xml 
+  - sonar-scanner

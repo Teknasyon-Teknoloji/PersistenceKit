@@ -47,3 +47,8 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# SonarQube
+sonarqube-generic-coverage.xml
+.sonar/
+.scannerwork/
