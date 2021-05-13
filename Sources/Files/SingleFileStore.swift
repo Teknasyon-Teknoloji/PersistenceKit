@@ -53,7 +53,7 @@ open class SingleFileStore<T: Codable> {
 	/// - Parameters:
 	///   - uniqueIdentifier: store's unique identifier.
 	///   - expiryDuration: optional store's expiry duration _default is .never_.
-    ///   - groupIdentifier:  optional app group for sharing container directory with app extentions. _default is nil_
+  ///   - groupIdentifier: optional app group for sharing container directory with app extentions. _default is nil_
 	required public init(uniqueIdentifier: String, expiration: Expiration = .never, groupIdentifier: String? = nil) {
 		self.uniqueIdentifier = uniqueIdentifier
 		self.expiration = expiration
