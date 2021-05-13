@@ -42,6 +42,9 @@ open class SingleFileStore<T: Codable> {
 
 	/// FileManager. _default is FileManager.default_
 	private var manager = FileManager.default
+    
+    /// App group for sharing container directory with app extentions. _default is nil_
+    private var appGroup: String? = nil
 
 	/// Initialize store with given identifier.
 	///
@@ -50,9 +53,11 @@ open class SingleFileStore<T: Codable> {
 	/// - Parameters:
 	///   - uniqueIdentifier: store's unique identifier.
 	///   - expiryDuration: optional store's expiry duration _default is .never_.
-	required public init(uniqueIdentifier: String, expiration: Expiration = .never) {
+  ///   - groupIdentifier: optional app group for sharing container directory with app extentions. _default is nil_
+	required public init(uniqueIdentifier: String, expiration: Expiration = .never, groupIdentifier: String? = nil) {
 		self.uniqueIdentifier = uniqueIdentifier
 		self.expiration = expiration
+        self.appGroup = groupIdentifier
 	}
 
 	/// Save object to store.
@@ -120,6 +125,7 @@ private extension SingleFileStore {
 	/// - Returns: Documents URL.
 	/// - Throws: `FileManager` error
 	func documentsURL() throws -> URL {
+        let containerUrl = appGroup.flatMap { manager.containerURL(forSecurityApplicationGroupIdentifier: $0) }
 		let directory: FileManager.SearchPathDirectory
 		switch expiration {
 		case .never:
@@ -128,7 +134,8 @@ private extension SingleFileStore {
 			directory = .cachesDirectory
 		}
 
-		return try manager.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let defaultUrl =  try manager.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return containerUrl ?? defaultUrl
 	}
 
 	/// FilesStore URL.

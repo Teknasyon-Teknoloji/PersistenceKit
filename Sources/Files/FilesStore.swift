@@ -42,6 +42,9 @@ open class FilesStore<T: Codable & Identifiable> {
 
 	/// FileManager. _default is FileManager.default_
 	private var manager = FileManager.default
+    
+    /// App group for sharing container directory with app extentions. _default is nil_
+    private var appGroup: String? = nil
 
 	/// Whether keys should be hashed before storing or not.
 	private var useHashing: Bool
@@ -54,10 +57,12 @@ open class FilesStore<T: Codable & Identifiable> {
 	///   - uniqueIdentifier: store's unique identifier.
 	///   - useHashing: Whether keys should be hashed before storing or not. _default is false_
 	///   - expiryDuration: optional store's expiry duration _default is .never_.
-	required public init(uniqueIdentifier: String, useHashing: Bool = false, expiration: Expiration = .never) {
+    ///   - groupIdentifier:  optional app group for sharing container directory with app extentions. _default is nil_
+	required public init(uniqueIdentifier: String, useHashing: Bool = false, expiration: Expiration = .never, groupIdentifier: String? = nil) {
 		self.uniqueIdentifier = uniqueIdentifier
 		self.useHashing = useHashing
 		self.expiration = expiration
+        self.appGroup = groupIdentifier
 	}
 
 	/// Save object to store.
@@ -196,6 +201,7 @@ private extension FilesStore {
 	/// - Returns: Documents or Caches URL.
 	/// - Throws: `FileManager` error
 	func documentsURL() throws -> URL {
+        let containerUrl = appGroup.flatMap { manager.containerURL(forSecurityApplicationGroupIdentifier: $0) }
 		let directory: FileManager.SearchPathDirectory
 		switch expiration {
 		case .never:
@@ -204,7 +210,8 @@ private extension FilesStore {
 			directory = .cachesDirectory
 		}
 
-		return try manager.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
+		let defaultUrl = try manager.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return containerUrl ?? defaultUrl
 	}
 
 	/// FilesStore URL.

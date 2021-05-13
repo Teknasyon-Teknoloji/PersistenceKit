@@ -28,7 +28,7 @@ PersistenceKit offers 3 layers of persistence suitable for most use cases:
 - Suitable for storing a reasonable number of objects.
 
 ### 2. Files
-- Stores data directly to directories in the app's documents directory using [`FileManager`](https://developer.apple.com/documentation/foundation/filemanager).
+- Stores data directly to directories in the app's default documents directory or shared app group directory using [`FileManager`](https://developer.apple.com/documentation/foundation/filemanager).
 - Suitable for storing large number of objects.
 
 ### 3. Keychain
@@ -137,8 +137,17 @@ let userStore = SingleUserDefaultsStore<User>(uniqueIdentifier: "user")!
 let usersStore = FilesStore<User>(uniqueIdentifier: "users")
 let laptopsStore = FilesStore<Laptop>(uniqueIdentifier: "laptops")
 
+// To save objects to the app group shared file system, create FilesStore:
+let appGroup = Bundle.main.infoDictionary?["appGroup"] as? String ?? "group.company.app"
+let usersStore = FilesStore<User>(uniqueIdentifier: "users", groupIdentifier: appGroup)
+let laptopsStore = FilesStore<Laptop>(uniqueIdentifier: "laptops", groupIdentifier: appGroup)
+
 // To save a single object to the file system, create SingleFilesStore:
 let userStore = SingleFilesStore<User>(uniqueIdentifier: "user")
+
+// To save a single object to the app group shared file system, create SingleFilesStore:
+let appGroup = Bundle.main.infoDictionary?["appGroup"] as? String ?? "group.company.app"
+let userStore = SingleFilesStore<User>(uniqueIdentifier: "user", groupIdentifier: appGroup)
 
 // To save a single object to the system's keychain, create SingleKeychainStore:
 let userStore = SingleKeychainStore<User>(uniqueIdentifier: "user")
