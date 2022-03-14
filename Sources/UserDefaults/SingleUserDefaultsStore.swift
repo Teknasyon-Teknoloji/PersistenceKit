@@ -31,6 +31,9 @@ open class SingleUserDefaultsStore<T: Codable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
 
+    /// Indicates whether the store initiated with using app group or not.
+    public let isSharedStore: Bool
+    
 	/// JSON encoder. _default is JSONEncoder()_
 	open var encoder = JSONEncoder()
 
@@ -45,10 +48,12 @@ open class SingleUserDefaultsStore<T: Codable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	///
 	/// - Parameter uniqueIdentifier: store's unique identifier.
-	required public init?(uniqueIdentifier: String) {
-		guard let store = UserDefaults(suiteName: uniqueIdentifier) else { return nil }
+    required public init?(uniqueIdentifier: String, groupIdentifier: String? = nil) {
+        let suiteName = groupIdentifier ?? uniqueIdentifier
+        guard let store = UserDefaults(suiteName: suiteName) else { return nil }
 		self.uniqueIdentifier = uniqueIdentifier
 		self.store = store
+        self.isSharedStore = groupIdentifier != nil
 	}
 
 	/// Save object to store.

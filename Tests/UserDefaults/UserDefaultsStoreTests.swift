@@ -198,16 +198,24 @@ final class StoreTests: XCTestCase {
 		store.deleteAll()
 		XCTAssertEqual(store.objectsCount, 0)
 	}
+    
+    func testInitWithAppGroupSharesData() {
+        let store = createFreshUsersStore(appGroup: "com.PersistenceKit.test")!
+        XCTAssertTrue(store.isSharedStore)
+        
+        XCTAssertNoThrow(try store.save(TestUser.john))
+        XCTAssert(store.hasObject(withId: TestUser.john.userId))
+    }
 
 }
 
 // MARK: - Helpers
 private extension StoreTests {
 
-	func createFreshUsersStore() -> UserDefaultsStore<TestUser>? {
-		var store = UserDefaultsStore<TestUser>(uniqueIdentifier: "users")
+    func createFreshUsersStore(appGroup: String? = nil) -> UserDefaultsStore<TestUser>? {
+        var store = UserDefaultsStore<TestUser>(uniqueIdentifier: "users", groupIdentifier: appGroup)
 		store?.deleteAll()
-		store = UserDefaultsStore<TestUser>(uniqueIdentifier: "users")
+		store = UserDefaultsStore<TestUser>(uniqueIdentifier: "users", groupIdentifier: appGroup)
 		return store
 	}
 

@@ -31,6 +31,9 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
 	public let uniqueIdentifier: String
 
+    /// Indicates whether the store initiated with using app group or not.
+    public let isSharedStore: Bool
+    
 	/// JSON encoder. _default is JSONEncoder()_
 	open var encoder = JSONEncoder()
 
@@ -42,7 +45,7 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 
 	/// Whether keys should be hashed before storing or not.
 	private var useHashing: Bool
-
+    
 	/// Initialize store with given identifier.
 	///
 	/// **Warning**: Never use the same identifier for two -or more- different stores.
@@ -50,11 +53,17 @@ open class UserDefaultsStore<T: Codable & Identifiable> {
 	/// - Parameters:
 	///   - uniqueIdentifier: uniqueIdentifier: store's unique identifier.
 	///   - useHashing: Whether keys should be hashed before storing or not. _default is false_
-	required public init?(uniqueIdentifier: String, useHashing: Bool = false) {
-		guard let store = UserDefaults(suiteName: uniqueIdentifier) else { return nil }
+	required public init?(
+        uniqueIdentifier: String,
+        groupIdentifier: String? = nil,
+        useHashing: Bool = false
+    ) {
+        let suiteName = groupIdentifier ?? uniqueIdentifier
+		guard let store = UserDefaults(suiteName: suiteName) else { return nil }
 		self.uniqueIdentifier = uniqueIdentifier
 		self.store = store
 		self.useHashing = useHashing
+        self.isSharedStore = groupIdentifier != nil
 	}
 
 	/// Save object to store.
