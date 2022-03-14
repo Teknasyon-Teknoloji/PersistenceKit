@@ -133,6 +133,10 @@ let laptopsStore = UserDefaultsStore<Laptop>(uniqueIdentifier: "laptops")!
 // To save a single object to UserDefaults, create UserDefaultsStore:
 let userStore = SingleUserDefaultsStore<User>(uniqueIdentifier: "user")!
 
+// If you want to share data between app and extentions:
+let sharedUsersStore = UserDefaultsStore<User>(uniqueIdentifier: "users", groupIdentifier: "com.yourCompany.app")!
+let sharedUserStore = SingleUserDefaultsStore<User>(uniqueIdentifier: "user", groupIdentifier: "com.yourCompany.app")!
+
 // To save objects to the file system, create FilesStore:
 let usersStore = FilesStore<User>(uniqueIdentifier: "users")
 let laptopsStore = FilesStore<Laptop>(uniqueIdentifier: "laptops")

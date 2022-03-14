@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = "PersistenceKit"
-    s.version = "1.3"
+    s.version = "1.4"
     s.summary = "
     Store and retrieve Codable objects to various persistence layers, in a couple lines of code! "
     s.description = <<-DESC

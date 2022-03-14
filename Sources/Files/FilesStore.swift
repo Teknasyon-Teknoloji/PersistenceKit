@@ -58,7 +58,12 @@ open class FilesStore<T: Codable & Identifiable> {
 	///   - useHashing: Whether keys should be hashed before storing or not. _default is false_
 	///   - expiryDuration: optional store's expiry duration _default is .never_.
     ///   - groupIdentifier:  optional app group for sharing container directory with app extentions. _default is nil_
-	required public init(uniqueIdentifier: String, useHashing: Bool = false, expiration: Expiration = .never, groupIdentifier: String? = nil) {
+	required public init(
+        uniqueIdentifier: String,
+        useHashing: Bool = false,
+        expiration: Expiration = .never,
+        groupIdentifier: String? = nil
+    ) {
 		self.uniqueIdentifier = uniqueIdentifier
 		self.useHashing = useHashing
 		self.expiration = expiration
